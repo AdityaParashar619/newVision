@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Parashar | 2026 Protocol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --bg-overlay: rgba(0, 0, 0, 0.85); /* Dark overlay so text pops */
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --text: #e0e0e0;
+            --accent: #00ff88; /* Neon Green for Action */
+            --gold: #ffd700;   /* Gold for Status/Mindset */
+            --danger: #ff4d4d; /* Red for Deadlines */
+            --dim: #555;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            /* --- CHANGE BACKGROUND IMAGE HERE --- */
+            /* You can replace the URL below with a local file like: url('my-family.jpg') */
+            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), 
+                        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            padding-bottom: 50px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero h2 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        /* --- COUNTDOWN TIMER --- */
+        .timer-box {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: var(--glass-border);
+            margin-bottom: 40px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+        }
+
+        .timer-label {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--danger);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        #countdown {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* --- QUICK DOCK (NEW) --- */
+        .dock {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+
+        .dock-btn {
+            background: rgba(255,255,255,0.05);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.3s;
+            border: var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dock-btn:hover {
+            background: var(--accent);
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        /* --- HABIT TRACKER (NEW) --- */
+        .tracker-section {
+            max-width: 600px;
+            margin: 0 auto 50px;
+            background: rgba(0,0,0,0.6);
+            padding: 25px;
+            border-radius: 15px;
+            border: var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .tracker-section h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1rem;
+        }
+
+        .habit {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.03);
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .habit:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .habit input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            margin-right: 15px;
+            cursor: pointer;
+            accent-color: var(--accent);
+        }
+
+        .habit label {
+            font-size: 1rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* --- MANIFESTO GRID --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-top: 2px solid var(--dim);
+            padding: 30px;
+            border-radius: 10px;
+            transition: 0.3s all ease;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-top: 2px solid var(--accent);
+            background: rgba(30, 30, 30, 0.8);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Special Cards */
+        .card.heart { border-top-color: #ff6b6b; } /* Love */
+        .card.heart:hover { border-top-color: #ff4757; box-shadow: 0 10px 30px rgba(255, 71, 87, 0.2); }
+        
+        .card.mind { border-top-color: var(--gold); } /* Mindset */
+        .card.mind:hover { border-top-color: #ffbf00; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2); }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        .highlight {
+            color: white;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+
+        /* --- FOOTER --- */
+        .footer-section {
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .quote-btn {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 12px 30px;
+            font-family: 'Roboto Mono', monospace;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 5px;
+        }
+
+        .quote-btn:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        #dynamic-quote {
+            margin-top: 30px;
+            font-style: italic;
+            color: var(--gold);
+            min-height: 30px;
+            font-size: 1.1rem;
+            padding: 0 20px;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            #countdown { font-size: 1.8rem; }
+            .dock { flex-direction: column; align-items: center; width: 100%; }
+            .dock-btn { width: 80%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <h1>Aditya Parashar</h1>
+        <h2>Architect of 2026</h2>
+        
+        <div class="timer-box">
+            <div class="timer-label">Mission Deadline: March 1st (Internship Ready)</div>
+            <div id="countdown">Loading...</div>
+        </div>
+
+        <div class="dock">
+            <a href="https://leetcode.com/problemset/all/" target="_blank" class="dock-btn">🚀 Solve LeetCode</a>
+            <a href="https://www.youtube.com/results?search_query=english+podcast" target="_blank" class="dock-btn">🎙️ English Podcast</a>
+            <a href="https://takeuforward.org/" target="_blank" class="dock-btn">📚 DSA Roadmap</a>
+            <a href="https://github.com/" target="_blank" class="dock-btn">💻 GitHub</a>
+        </div>
+    </section>
+
+    <div class="tracker-section">
+        <h3>Daily Non-Negotiables</h3>
+        <div class="habit">
+            <input type="checkbox" id="habit-dsa" onclick="saveHabit('habit-dsa')">
+            <label for="habit-dsa">Solved 1 DSA Question (No Excuses)</label>
+        </div>
+        <div class="habit">
+            <input type="checkbox" id="habit-english" onclick="saveHabit('habit-english')">
+            <label for="habit-english">Read 10 Pages OR Listen to Podcast</label>
+        </div>
+        <div class="habit">
+            <input type="checkbox" id="habit-kindness" onclick="saveHabit('habit-kindness')">
+            <label for="habit-kindness">Spoke calmly & kindly to everyone</label>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div class="card">
+            <h3>01 // The March Sprint</h3>
+            <p>I am <span class="highlight">Internship Ready</span> by March 1st. My DSA skills are sharp. I conquer one LeetCode problem every single day. I do not make excuses; I write code.</p>
+        </div>
+
+        <div class="card">
+            <h3>02 // Academic Focus</h3>
+            <p>I am a top-tier student. My target is an <span class="highlight">8+ CGPA</span>. I balance my coding with my college subjects because excellence is a habit.</p>
+        </div>
+
+        <div class="card">
+            <h3>03 // The Gentleman</h3>
+            <p>I am growing mature, pleasant, and well-groomed. When people look at me, they see confidence. I am working on my English daily.I am focused on my physical health by regularly attending the gym and enhancing my personal development.</p>
+        </div>
+
+        <div class="card">
+            <h3>04 // Job Ready</h3>
+            <p>By December 31st, 2026, I am not just a student; I am an engineer ready to be hired. <span class="highlight">Full Stack. Backend. Frontend.</span></p>
+        </div>
+
+        <div class="card">
+            <h3>05 // Master of Words</h3>
+            <p>I consume knowledge to improve my speech. <span class="highlight">2 Books</span> this year. Podcasts every week. My vocabulary is my weapon.</p>
+        </div>
+
+        <div class="card heart">
+            <h3>06 // Family Pride</h3>
+            <p>My parents will be proud to say, "That is Aditya Parashar." I remove their burdens. I bring them peace. Their relaxation is my success.</p>
+        </div>
+
+        <div class="card">
+            <h3>08 // Restricted Access</h3>
+            <p>I am available only for my people. I do not waste energy on those who do not matter. I care deeply, but I choose my circle wisely.</p>
+        </div>
+        
+        <div class="card">
+            <h3>08 // Zero Regrets</h3>
+            <p>Every month, I check myself: "Is my present better than my past?" The answer must always be YES. No days wasted.Finally, I want to go to an amazing trip with my friends</p>
+        </div>
+
+        <div class="card mind">
+            <h3>09 // The Charioteer</h3>
+            <p>I control the horses. I control my emotions. I am a giver, a stoic, and a good person upgrading to greatness. <span class="highlight">I have no bad habits.</span></p>
+        </div>
+
+            <div class="card heart">
+            <h3>10 // Pure Bond</h3>
+            <p>This year, I truly hope our friendship endures. I want this year to be exceptionally memorable for us. Furthermore, I aim to make her proud and ensure she feels fortunate to have me in her life. Her happiness brings me joy, so my primary wish is for our bond to strengthen this year. We should grow together, improve, and share happiness. My intentions are pure, without of any hidden agenda or lust—only sincerity and kindness. While I'm unsure how to define our connection, my goal is to ensure she always feels happy and at ease. If she chooses to leave, I will accept it, though her departure saddens me, even as I celebrate her happiness. That is my sincere hope.</p>
+        </div>
+
+    </div>
+
+    <div class="footer-section">
+        <button class="quote-btn" onclick="newQuote()">Generate Energy</button>
+        <div id="dynamic-quote"></div>
+        <p style="margin-top:50px; opacity: 0.5; font-size: 0.8rem;">&copy; 2026 ADITYA PARASHAR</p>
+    </div>
+
+    <script>
+        // --- 1. COUNTDOWN LOGIC (March 1st, 2026) ---
+        const targetDate = new Date("March 1, 2026 00:00:00").getTime();
+
+        const timerInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = 
+                days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+            if (distance < 0) {
+                clearInterval(timerInterval);
+                document.getElementById("countdown").innerHTML = "IT BEGINS NOW.";
+                document.getElementById("countdown").style.color = "#00ff88";
+            }
+        }, 1000);
+
+        // --- 2. HABIT TRACKER (Saves to LocalStorage) ---
+        function saveHabit(id) {
+            const checkbox = document.getElementById(id);
+            const today = new Date().toDateString(); // Unique key for every day
+            
+            // Saves: 'habit-dsa-Sun Dec 28 2025' -> 'true'
+            localStorage.setItem(id + '-' + today, checkbox.checked);
+            
+            if(checkbox.checked) {
+                // Visual feedback
+                checkbox.parentElement.style.borderColor = "#00ff88";
+            } else {
+                checkbox.parentElement.style.borderColor = "transparent";
+            }
+        }
+
+        // Load habits when page opens
+        window.onload = function() {
+            const habits = ['habit-dsa', 'habit-english', 'habit-kindness'];
+            const today = new Date().toDateString();
+
+            habits.forEach(id => {
+                const savedState = localStorage.getItem(id + '-' + today);
+                const checkbox = document.getElementById(id);
+                if (savedState === 'true') {
+                    checkbox.checked = true;
+                    checkbox.parentElement.style.borderColor = "#00ff88";
+                }
+            });
+        }
+
+        // --- 3. QUOTE GENERATOR ---
+        const quotes = [
+            "You are the charioteer of your own vehicle.",
+            "Do not lower your goals to the level of your abilities. Raise your abilities to the height of your goals.",
+            "Discipline is doing what needs to be done, even if you don't want to do it.",
+            "Your parents are watching. Make them proud.",
+            "A pure heart is a strong heart.",
+            "Code today, or regret tomorrow.",
+            "Silence is better than unnecessary words.",
+            "The future belongs to those who prepare for it today."
+        ];
+
+        function newQuote() {
+            const randomNumber = Math.floor(Math.random() * quotes.length);
+            document.getElementById('dynamic-quote').innerText = '"' + quotes[randomNumber] + '"';
+        }
+    </script>
+</body>
+</html>
